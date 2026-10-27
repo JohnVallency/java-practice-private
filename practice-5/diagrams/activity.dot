@@ -1,0 +1,26 @@
+digraph Activity {
+    graph [label="Обработка строки табеля", labelloc=t, fontsize=24, dpi=200, size="14,9!"];
+    node [shape=box, style="rounded", fontname="DejaVu Sans", fontsize=16, margin="0.18,0.12"];
+    edge [fontname="DejaVu Sans", fontsize=14];
+
+    start [shape=circle, label="", width=0.3, style=filled, fillcolor=black];
+    n1 [label="Получить строку часов"];
+    n2 [label="Разделить строку: split(\";\", -1)"];
+    n3 [shape=diamond, label="Ровно пять\nзначений?"];
+    n4 [label="Для каждого элемента:\nпроверить формат -1 или целого без ведущих нулей,\nпроверить диапазон [-1, 16], преобразовать в int"];
+    n5 [shape=diamond, label="Все элементы\nкорректны?"];
+    n6 [label="Вычислить total, average,\novertimeDays и weeklyOvertime"];
+    n6b [label="Подсчитать отгулы:\naddDayOffCount"];
+    n7 [label="Сформировать итоговый отчёт:\nсумма, среднее, дни переработки,\nнедельная переработка, отгулы"];
+    n8 [label="Сформировать сообщение об ошибке"];
+    end [shape=doublecircle, label="", width=0.35, style=filled, fillcolor=black];
+
+    start -> n1 -> n2 -> n3;
+    n3 -> n4 [label="да"];
+    n3 -> n8 [label="нет"];
+    n4 -> n5;
+    n5 -> n6 [label="да"];
+    n5 -> n8 [label="нет"];
+    n6 -> n6b -> n7 -> end;
+    n8 -> end;
+}

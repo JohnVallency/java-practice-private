@@ -1,0 +1,26 @@
+# Вариант 27: добавлен department перед expected; null означает отсутствие отдела.
+amount;urgent;risk;personal;department;expected
+10000;true;LOW;false;null;FAST_TRACK
+500000;false;LOW;false;null;FINANCE_REVIEW
+500001;false;LOW;false;null;FINANCE_REVIEW
+499999;true;LOW;false;null;FAST_TRACK
+10000;false;LOW;false;null;STANDARD
+10000;false;MEDIUM;false;null;STANDARD
+10000;true;HIGH;false;null;DIRECTOR_REVIEW
+10000;false;LOW;true;null;SECURITY_REVIEW
+10000;true;LOW;true;null;SECURITY_REVIEW
+10000;true;HIGH;false;null;DIRECTOR_REVIEW
+10000;false;HIGH;true;null;SECURITY_REVIEW
+600000;true;LOW;false;null;FINANCE_REVIEW
+600000;false;HIGH;false;null;DIRECTOR_REVIEW
+10000;true;HIGH;true;null;SECURITY_REVIEW
+0;false;LOW;false;null;STANDARD
+10000000;false;LOW;false;null;FINANCE_REVIEW
+-1;true;LOW;false;null;ERROR
+10000;true;null;false;null;ERROR
+# Пять строк индивидуального варианта.
+500000;true;LOW;false;IT;FAST_TRACK
+600000;true;MEDIUM;false;IT;FAST_TRACK
+600000;true;LOW;true;IT;SECURITY_REVIEW
+600000;true;HIGH;false;IT;DIRECTOR_REVIEW
+600000;false;LOW;false;IT;FINANCE_REVIEW

@@ -1,0 +1,53 @@
+digraph Activity {
+    graph [label="Формирование заказа — вариант 27", labelloc=t, fontname="DejaVu Sans", fontsize=24, dpi=150];
+    node [shape=box, fontname="DejaVu Sans", fontsize=15, margin="0.12,0.1"];
+    edge [fontname="DejaVu Sans", fontsize=13];
+    start [shape=circle, label="", width=0.25, style=filled];
+    create [label="Создать заказ сотрудника\nСтатус DRAFT, состав и история пусты"];
+    input [label="Получить товар и количество"];
+    validate [label="Проверить id и name: не null и не blank;\nprice > 0; product не null; quantity в [1, 100]"];
+    valid [shape=diamond, label="Позиция корректна\nи заказ DRAFT?"];
+    error [label="Сообщить об ошибке\nБез изменения состава и истории"];
+    exists [shape=diamond, label="Товар с этим id\nуже есть?"];
+    merge [label="Увеличить количество,\nпроверив итоговый диапазон [1, 100]"];
+    canMerge [shape=diamond, label="Увеличение\nдопустимо?"];
+    add [label="Добавить новую позицию"];
+    history [label="Добавить запись об успешном добавлении\nв history (включая объединение)"];
+    more [shape=diamond, label="Есть ещё позиции?"];
+    sum [label="Рассчитать total через сумму getLineTotal\nбез хранения поля total"];
+    confirmable [shape=diamond, label="Заказ не пустой\nи статус DRAFT?"];
+    confirm [label="Установить CONFIRMED\nДобавить запись подтверждения в history"];
+    confirmError [label="Сообщить об отказе подтверждения\nСтатус и история не меняются"];
+    end [shape=doublecircle, label="", width=0.3];
+    start -> create -> input -> validate -> valid;
+    valid -> exists [label="да"];
+    valid -> error [label="нет"];
+    exists -> merge [label="да"];
+    exists -> add [label="нет"];
+    merge -> canMerge;
+    canMerge -> history [label="да"];
+    canMerge -> error [label="нет"];
+    add -> history -> more;
+    error -> more;
+    more -> input [label="да"];
+    more -> sum [label="нет"];
+    sum -> confirmable;
+    confirmable -> confirm [label="да"];
+    confirmable -> confirmError [label="нет"];
+    confirm -> end;
+    confirmError -> end;
+
+    subgraph cluster_remove {
+        label="Отдельная операция removeProduct";
+        removeStart [label="Получить productId"];
+        removeValid [shape=diamond, label="Заказ DRAFT\nи productId не null?"];
+        remove [label="Удалить позицию при наличии\nЗаписать вызов в history\n(в том числе если товар не найден)"];
+        removeError [label="Выбросить исключение\nИстория не меняется"];
+        removeEnd [shape=doublecircle, label="", width=0.3];
+        removeStart -> removeValid;
+        removeValid -> remove [label="да"];
+        removeValid -> removeError [label="нет"];
+        remove -> removeEnd;
+        removeError -> removeEnd;
+    }
+}

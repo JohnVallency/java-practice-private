@@ -1,0 +1,19 @@
+digraph Transitions {
+    graph [label="Переходы BusinessTrip — вариант 27", labelloc=t, fontname="DejaVu Sans", fontsize=24, dpi=160, rankdir=LR, nodesep=0.9, ranksep=1.5];
+    node [shape=box, style=rounded, fontname="DejaVu Sans", fontsize=18, margin="0.2,0.15"];
+    edge [fontname="DejaVu Sans", fontsize=15];
+    DRAFT;
+    SUBMITTED;
+    APPROVED;
+    REJECTED [peripheries=2];
+    CANCELLED [peripheries=2];
+    COMPLETED [peripheries=2];
+    DRAFT -> SUBMITTED [label="submit()\nid, start, end проверены в конструкторе"];
+    SUBMITTED -> APPROVED [label="approve()"];
+    SUBMITTED -> REJECTED [label="reject(reason)\nreason != null, length ≥15\naddRejectCode(reason) != null"];
+    DRAFT -> CANCELLED [label="cancel()"];
+    SUBMITTED -> CANCELLED [label="cancel()"];
+    APPROVED -> CANCELLED [label="cancel()"];
+    APPROVED -> COMPLETED [label="complete()\nLocalDate.now() ≥ end"];
+    {rank=same; REJECTED; CANCELLED; COMPLETED;}
+}

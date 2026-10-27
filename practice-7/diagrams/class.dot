@@ -1,0 +1,19 @@
+digraph Classes {
+    graph [label="Корпоративный заказ — вариант 27", labelloc=t, fontname="DejaVu Sans", fontsize=24, dpi=150];
+    node [shape=record, fontname="DejaVu Sans", fontsize=14, margin="0.12,0.08"];
+    edge [fontname="DejaVu Sans", fontsize=12];
+    Product [label="{Product|- id: String (final)\l- name: String (final)\l- price: double (final)\l|+ Product(id: String, name: String, price: double)\l+ getId(): String\l+ getName(): String\l+ getPrice(): double\l}"];
+    Employee [label="{«record» Employee|- id: String (final)\l- fullName: String (final)\l|+ Employee(id: String, fullName: String)\l+ id(): String\l+ fullName(): String\l}"];
+    OrderItem [label="{OrderItem|- MIN_QUANTITY: int = 1 (static final)\l- MAX_QUANTITY: int = 100 (static final)\l- product: Product (final)\l- quantity: int\l|+ OrderItem(product: Product, quantity: int)\l- setQuantity(quantity: int): void\l+ increase(delta: int): void\l- quantityError(): IllegalArgumentException\l+ getProduct(): Product\l+ getQuantity(): int\l+ getLineTotal(): double\l}"];
+    Order [label="{Order|- employee: Employee (final)\l- items: List\<OrderItem\> (final)\l- history: List\<String\> (final)\l- status: OrderStatus\l|+ Order(employee: Employee)\l+ addProduct(product: Product, quantity: int): void\l+ removeProduct(productId: String): void\l+ total(): double\l+ confirm(): void\l- ensureDraft(): void\l+ getEmployee(): Employee\l+ getItems(): List\<OrderItem\>\l+ getStatus(): OrderStatus\l+ getHistory(): List\<String\>\l+ addHistorySize(order: Order): int\l}"];
+    OrderStatus [label="{«enum» OrderStatus|DRAFT\lCONFIRMED\l}"];
+    OrderService [label="{OrderService|+ createOrder(employee: Employee): Order\l}"];
+    SelfCheck [label="{SelfCheck|+ main(args: String[]): void (static)\l}"];
+    SelfCheck -> OrderService [style=dashed, label="создаёт через сервис"];
+    SelfCheck -> Order [style=dashed, label="проверяет"];
+    OrderService -> Order [style=dashed, label="создаёт"];
+    Order -> Employee [label="1"];
+    Order -> OrderItem [dir=both, arrowtail=diamond, arrowhead=none, label="0..*"];
+    OrderItem -> Product [label="1"];
+    Order -> OrderStatus [style=dashed, label="статус"];
+}

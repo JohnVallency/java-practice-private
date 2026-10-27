@@ -1,0 +1,10 @@
+digraph Classes {
+    graph [label="Диаграмма классов", labelloc=t, fontsize=24, dpi=150, size="14,9!"];
+    node [shape=record, fontname="DejaVu Sans", fontsize=15, margin="0.12,0.08"];
+    edge [fontname="DejaVu Sans", fontsize=14];
+
+    analyzer [label="{TimesheetAnalyzer|+ parseHours(line: String): int[]\l+ total(hours: int[]): int\l+ average(hours: int[]): double\l+ overtimeDays(hours: int[]): int\l+ weeklyOvertime(hours: int[]): int\l+ addDayOffCount(hours: int[]): int\l}"];
+    selfcheck [label="{SelfCheck|+ main(args: String[]): void\l}"];
+
+    selfcheck -> analyzer [label="вызывает", arrowhead=vee];
+}

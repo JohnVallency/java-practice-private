@@ -1,0 +1,12 @@
+digraph Classes {
+    graph [label="Классы — вариант 27 (все методы SelfCheck — static)", labelloc=t, fontname="DejaVu Sans", fontsize=24, dpi=150, rankdir=TB];
+    node [shape=record, fontname="DejaVu Sans", fontsize=14, margin="0.15,0.1"];
+    edge [fontname="DejaVu Sans", fontsize=13];
+    router [label="{ApprovalRouter|+ FINANCE_LIMIT: long = 500000 (static final)\l|+ route(amount: long, urgent: boolean, risk: RiskLevel,\l  containsPersonalData: boolean, department: String): ApprovalRoute\l+ addDepartmentPriority(department: String, urgent: boolean): int\l- requiresSecurityReview(containsPersonalData: boolean): boolean\l- requiresDirectorReview(risk: RiskLevel): boolean\l- requiresFinanceReview(amount: long): boolean\l- requiresFastTrack(amount: long, urgent: boolean): boolean\l}"];
+    risk [label="{«enum» RiskLevel|LOW\lMEDIUM\lHIGH\l}"];
+    route [label="{«enum» ApprovalRoute|STANDARD\lFAST_TRACK\lFINANCE_REVIEW\lDIRECTOR_REVIEW\lSECURITY_REVIEW\l}"];
+    check [label="{SelfCheck|- passed: int (static)\l- total: int (static)\l|+ main(args: String[]): void (static)\l- runUnitChecks(): void\l- check(name: String, amount: long, urgent: boolean, risk: RiskLevel,\l  personal: boolean, expected: ApprovalRoute): void\l- checkRoute(name: String, amount: long, urgent: boolean, risk: RiskLevel,\l  personal: boolean, department: String, expected: ApprovalRoute): void\l- checkError(name: String, amount: long, risk: RiskLevel, expected: String): void\l- record(name: String, ok: boolean, details: String): void\l- runDataChecks(): void\l- runVariantChecks(): void\l- checkPriority(name: String, department: String, urgent: boolean, expected: int): void\l- routeFields(parts: String[]): ApprovalRoute\l- parseBoolean(value: String): boolean\l- runInputChecks(): void\l- routeLine(line: String): ApprovalRoute\l- checkInputError(name: String, line: String, expected: String): void\l- runInteractiveMode(): void\l- checkDataLine(line: String, number: int): void\l}"];
+    check -> router [style=dashed, label="вызывает"];
+    router -> risk [style=dashed, label="принимает"];
+    router -> route [style=dashed, label="возвращает"];
+}

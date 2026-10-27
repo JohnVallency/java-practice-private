@@ -1,0 +1,19 @@
+productId;name;price;quantity;expected
+M01;Monitor 27;32990;2;OK:qty=2
+K01;Keyboard;4490;3;OK:qty=3
+M02;Monitor 32;45000;1;OK:qty=1
+P01;Printer;15000;1;OK:qty=1
+M01;Monitor 27;32990;1;OK:merged,qty=3
+X01;Broken;-100;1;SKIP:price must be > 0
+L01;Lamp;1000;1;OK:qty=1
+L02;Lamp Pro;2000;100;OK:qty=100
+L03;Lamp Max;3000;101;SKIP:quantity must be in [1, 100]
+C01;Cable;500;5;OK:qty=5
+C02;Cable Pro;1500;2;OK:qty=2
+# Вариант 27: каждое успешное объединение добавляет одну запись истории.
+M01;Monitor 27;32990;1;OK:merged,qty=4
+C01;Cable;500;2;OK:merged,qty=7
+K01;Keyboard;4490;1;OK:merged,qty=4
+# Отказ не добавляет запись истории.
+M01;Monitor 27;32990;100;SKIP:quantity must be in [1, 100]
+TOTAL;positions=8;sum=417420.00;history=12

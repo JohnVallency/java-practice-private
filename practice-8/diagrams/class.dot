@@ -1,0 +1,13 @@
+digraph Classes {
+    graph [label="Модель командировки — вариант 27", labelloc=t, fontname="DejaVu Sans", fontsize=24, dpi=160, nodesep=0.5, ranksep=0.7];
+    node [shape=record, fontname="DejaVu Sans", fontsize=15, margin="0.15,0.1"];
+    edge [fontname="DejaVu Sans", fontsize=13];
+    BusinessTrip [label="{BusinessTrip|- MIN_REASON_LENGTH: int = 15 (static final)\l- id: String (final)\l- start: LocalDate (final)\l- end: LocalDate (final)\l- status: TripStatus = DRAFT\l- rejectionReason: String\l|+ BusinessTrip(id: String, start: LocalDate, end: LocalDate)\l+ submit(): void\l+ approve(): void\l+ reject(reason: String): void\l+ cancel(): void\l+ complete(): void\l- requireStatus(required: TripStatus, target: TripStatus): void\l- transitionError(target: TripStatus): IllegalStateException\l+ getId(): String\l+ getStart(): LocalDate\l+ getEnd(): LocalDate\l+ getStatus(): TripStatus\l+ getRejectionReason(): String\l+ addRejectCode(reason: String): String\l}"];
+    TripStatus [label="{«enum» TripStatus|DRAFT\lSUBMITTED\lAPPROVED\lREJECTED\lCANCELLED\lCOMPLETED\l}"];
+    BusinessTripService [label="{BusinessTripService|+ create(id: String, start: LocalDate, end: LocalDate): BusinessTrip\l}"];
+    SelfCheck [label="{SelfCheck|+ main(args: String[]): void (static)\l}"];
+    SelfCheck -> BusinessTripService [style=dashed, label="проверяет создание"];
+    SelfCheck -> BusinessTrip [style=dashed, label="проверяет переходы"];
+    BusinessTripService -> BusinessTrip [style=dashed, label="создаёт"];
+    BusinessTrip -> TripStatus [style=dashed, label="использует"];
+}
